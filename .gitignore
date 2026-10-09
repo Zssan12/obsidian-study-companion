@@ -1,0 +1,17 @@
+node_modules/
+main.js
+main.js.map
+artifacts/
+coverage/
+.DS_Store
+
+# Local vault configuration, screenshots and execution history are never source releases.
+.obsidian/
+.playwright-cli/
+output/
+.env
+.env.*
+*.log
+# Historical local handoffs contain machine-specific paths; keep locally.
+docs/HANDOFF.md
+docs/validation.md

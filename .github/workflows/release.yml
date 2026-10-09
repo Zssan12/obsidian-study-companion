@@ -1,0 +1,31 @@
+name: Draft release
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: study-companion-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - run: npm audit --audit-level=moderate
+      - run: npm run release:check
+      - run: npm run package
+        id: package
+      - name: Create draft with installer and Obsidian assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ZIP_PATH: ${{ steps.package.outputs.zip_path }}
+          CHECKSUM_PATH: ${{ steps.package.outputs.checksum_path }}
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          gh release create "$VERSION" "$ZIP_PATH" "$CHECKSUM_PATH" main.js manifest.json styles.css --draft --target "$GITHUB_SHA" --title "Study Companion $VERSION" --notes-file CHANGELOG.md

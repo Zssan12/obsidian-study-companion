@@ -1,0 +1,35 @@
+Study Companion 0.1.0 — 先读我
+
+这是 Obsidian 桌面插件。Mac 和 Windows 使用同一份安装包，不需要编译。
+
+第一步：根据电脑系统打开 MAC-SETUP.md 或 WINDOWS-SETUP.md，按顺序操作。
+这些文件可用文本编辑器打开，也可以在 GitHub 上阅读排版版本：
+https://github.com/Zssan12/obsidian-study-companion#readme
+
+你需要：Obsidian 1.13.0+；你自己的 Codex 或 Claude 服务权限；
+电脑上安装并登录相应的官方 CLI（二选一）。只有网页或桌面 App 不够。
+无需 API key，不需要把登录文件交给别人。
+
+安装插件：
+1. 解压 ZIP。
+2. 将包内 study-companion 文件夹复制到：
+   你的笔记仓库/.obsidian/plugins/
+3. 检查最终有：
+   你的笔记仓库/.obsidian/plugins/study-companion/main.js
+   同一级还有 manifest.json 和 styles.css。
+4. Obsidian → 设置 → 第三方插件 → 关闭受限模式 → 启用 Study Companion。
+5. 插件设置 → 新对话默认后端，选择已登录的 Codex 或 Claude。
+6. 点击“重新检测 CLI 路径”，模型先用默认。
+7. 新建一篇笔记，选中一句话 → Quick Ask → 发送。
+
+首次试用建议新建测试仓库；成功后再在日常仓库重复安装。
+找不到隐藏目录、CLI 路径或没有回答：看对应系统教程及 TROUBLESHOOTING.md。
+
+升级：先完全退出 Obsidian 并备份仓库，只覆盖 main.js、manifest.json、styles.css。
+保留旧 data.json、history.json、资料、附件及笔记；不要清空插件文件夹。
+
+使用自己模型服务的额度。问答会发送问题、必要资料和历史给所选服务。
+离线词典不调用模型。插件没有遥测。详情见 study-companion/PRIVACY.md。
+
+此版本保留完整功能。Windows 实机完整验收尚未完成；问题反馈见 FEEDBACK.md。
+BUILD-INFO.json 可核对版本和构建编号。ZIP 不含作者账号、设置、聊天记录或测试仓库。

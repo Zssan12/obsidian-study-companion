@@ -1,0 +1,48 @@
+{
+  "name": "obsidian-study-companion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Source-bound learning conversations for Obsidian",
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.config.mjs --watch",
+    "build": "npm run typecheck && node esbuild.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests && node scripts/check-boundaries.mjs",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "package": "npm run build && node scripts/package.mjs",
+    "evaluate:pdf": "node scripts/evaluate-pdf-agent.mjs",
+    "evaluate:learning": "node scripts/evaluate-learning-tools.mjs",
+    "release:check": "node scripts/check-release.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.267"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.4",
+    "@types/node": "22.15.17",
+    "esbuild": "0.25.5",
+    "eslint": "9.39.4",
+    "fflate": "0.8.3",
+    "jsdom": "26.1.0",
+    "obsidian": "1.13.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.59.1",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "author": "Zssan12",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zssan12/obsidian-study-companion.git"
+  },
+  "overrides": {
+    "obsidian": {
+      "moment": "2.31.0"
+    }
+  }
+}

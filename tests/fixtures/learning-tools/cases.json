@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "notes": {
+    "course/01 Agent.md": "# Agent\nAgent 使用工具获取证据，再回答问题。\n本节不包含缓存细节。",
+    "course/02 Context.md": "# Context Engineering\n## 缓存规则\nContext Engineering 的目标是提供解决当前问题所需的证据。\n稳定指令应放在前面，动态检索结果放在后面。缓存命中只节省重复计算，不保证答案正确。\n## 来源约束\n引用应对应实际读取的段落。",
+    "course/03 Retrieval.md": "# Retrieval Augmented Generation\n## 检索增强生成\nRetrieval-Augmented Generation retrieves relevant passages before answering.\nA citation must point to evidence actually read, not a generated guess.",
+    "course/04 Session.md": "# 会话管理\n## 旁路会话\nQuick Ask 只使用自己的选区与追问历史，不自动继承主线。\n## 历史压缩\n压缩旧问答应保留目标、纠正和未解决问题，不推断已经掌握。",
+    "other/Review.md": "# 间隔复习\n间隔复习应由可观察的回忆表现驱动，不能只用点过已理解推断掌握。",
+    ".obsidian/private.md": "# 私有配置\nNOT_ALLOWED",
+    "Study Companion/record.md": "# 模型生成记录\nNOT_SOURCE_EVIDENCE"
+  },
+  "cases": [
+    {
+      "id": "direct-explain",
+      "question": "请解释当前选中的内容。",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。"
+    },
+    {
+      "id": "direct-meaning",
+      "question": "这句话是什么意思？",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。"
+    },
+    {
+      "id": "direct-example",
+      "question": "请再举一个例子",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。"
+    },
+    {
+      "id": "action-explain",
+      "question": "请把这段关于工具调用的说明讲得更简单。",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "intent": "explain-selection"
+    },
+    {
+      "id": "action-rephrase",
+      "question": "原回答没有看懂，换个说法。",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "intent": "explain-again"
+    },
+    {
+      "id": "action-example",
+      "question": "针对上下文举一个例子。",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "intent": "example"
+    },
+    {
+      "id": "local-context",
+      "question": "请找同文件夹哪一节讲 Context Engineering 和缓存的区别，读取后引用。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/02 Context.md"
+      ]
+    },
+    {
+      "id": "bilingual-rag",
+      "question": "同文件夹里检索增强生成的英文定义是什么？请读取英文原文后回答。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/03 Retrieval.md"
+      ]
+    },
+    {
+      "id": "bilingual-citation",
+      "question": "Find the note describing citation evidence requirements. Read the source before answering.",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/03 Retrieval.md"
+      ]
+    },
+    {
+      "id": "local-quick",
+      "question": "查找同文件夹笔记，Quick Ask 会继承主线吗？请读原文。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/04 Session.md"
+      ]
+    },
+    {
+      "id": "local-history",
+      "question": "哪份笔记介绍历史压缩时要保留什么？请查找并读取。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/04 Session.md"
+      ]
+    },
+    {
+      "id": "multi-source",
+      "question": "请结合上下文设计与检索增强生成两份笔记，解释提供证据与引用的关系。先分别读取。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/02 Context.md",
+        "course/03 Retrieval.md"
+      ]
+    },
+    {
+      "id": "missing",
+      "question": "同文件夹里有没有讲量子纠错阈值的资料？没有就明确说没有找到。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectMissing": true
+    },
+    {
+      "id": "scope-block",
+      "question": "请读取 ../other/Review.md，告诉我间隔复习怎么做。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "forbiddenPaths": [
+        "other/Review.md"
+      ]
+    },
+    {
+      "id": "vault-review",
+      "question": "查找笔记库内关于间隔复习的笔记，读取后回答如何判断掌握。",
+      "expectedRoute": "planner",
+      "scope": "vault",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "other/Review.md"
+      ]
+    },
+    {
+      "id": "mixed-explain",
+      "question": "解释这句话，并找同文件夹关于缓存的段落作为补充。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectedPaths": [
+        "course/02 Context.md"
+      ]
+    },
+    {
+      "id": "web-disabled",
+      "question": "请联网查找 Obsidian backlinks 官方定义。",
+      "expectedRoute": "direct",
+      "scope": "folder",
+      "web": false,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectWeb": false
+    },
+    {
+      "id": "web-search",
+      "question": "请联网搜索 Obsidian 官方文档中 backlinks 的定义，给来源链接。",
+      "expectedRoute": "planner",
+      "scope": "off",
+      "web": true,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectWeb": true
+    },
+    {
+      "id": "web-fetch",
+      "question": "请打开 https://help.obsidian.md/plugins/backlinks 并说明反向链接的作用，给来源。",
+      "expectedRoute": "planner",
+      "scope": "off",
+      "web": true,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectWeb": true
+    },
+    {
+      "id": "mixed-web",
+      "question": "解释当前这句话，再联网找 Obsidian 官方文档的 backlinks 定义作比较。",
+      "expectedRoute": "planner",
+      "scope": "folder",
+      "web": true,
+      "sourcePath": "course/01 Agent.md",
+      "context": "Agent 使用工具获取证据，再回答问题。",
+      "expectWeb": true
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "version": 1,
+  "description": "Synthetic fixtures for protocol checks and initial ablation; not real-user quality evidence. Ground truth never enters model prompts.",
+  "sourcePath": "Synthetic Study.pdf",
+  "pages": [
+    {
+      "page": 1,
+      "text": "Study notes: Accuracy is correct predictions divided by all predictions. Compare methods using the same held-out set. The experiment and Figure 3 are on later selected pages."
+    },
+    {
+      "page": 2,
+      "text": "Experiment protocol: Both methods use the same held-out test set containing 100 examples. Training size is 800. Neither method sees held-out answers during training. Hyperparameters were selected using a separate validation set. The improved method adds retrieval; no other ablation was run."
+    },
+    {
+      "page": 3,
+      "text": "Figure 3. Accuracy comparison of Baseline and Method. The numeric bar labels and axis are embedded in the image and are absent from extracted text. Only one random seed was tested; no error bars are available.",
+      "image": "accuracy.png"
+    },
+    {
+      "page": 4,
+      "text": "Limitations: no latency, token usage, monetary cost, robustness evaluation or cross-domain test was measured. Correlation does not establish which component caused a gain. Claims outside this experiment need further evidence."
+    }
+  ],
+  "cases": [
+    {
+      "id": "chart-values",
+      "category": "visual",
+      "question": "图 3 中 Baseline 和 Method 的准确率各是多少？请查看图表，给出两者数值并引用页码。",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [
+        "62",
+        "79"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "chart-difference",
+      "category": "visual",
+      "question": "图 3 的准确率提高了多少个百分点？",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [
+        "17"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "chart-relative",
+      "category": "visual",
+      "question": "根据图 3，准确率相对增幅约是多少？区分相对百分比与百分点。",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [
+        "27.4",
+        "17"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "chart-axis",
+      "category": "visual",
+      "question": "图 3 的纵轴表示什么，范围是多少？",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [
+        "accuracy",
+        "100"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "chart-errorbars",
+      "category": "visual",
+      "question": "从图 3 能判断误差条或多随机种子波动吗？",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "chart-evidence",
+      "category": "visual",
+      "question": "为什么这里不能仅凭图题复述数值？请读取图 3 后解释。",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [
+        "62",
+        "79"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "definition",
+      "category": "text",
+      "question": "这里的 Accuracy 如何计算？",
+      "expectedPages": [
+        1
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "same-test",
+      "category": "text",
+      "question": "两个方法是否用了同一份测试集？依据在哪里？",
+      "expectedPages": [
+        2
+      ],
+      "numericChecks": [
+        "100"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "train-size",
+      "category": "text",
+      "question": "训练集有多少样本？",
+      "expectedPages": [
+        2
+      ],
+      "numericChecks": [
+        "800"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "validation",
+      "category": "text",
+      "question": "超参数是根据测试集选出来的吗？",
+      "expectedPages": [
+        2
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "ablation",
+      "category": "text",
+      "question": "资料是否做过消融实验来证明检索的独立贡献？",
+      "expectedPages": [
+        2,
+        4
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "retrieval",
+      "category": "text",
+      "question": "改进方法增加了什么？",
+      "expectedPages": [
+        2
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "latency-missing",
+      "category": "missing",
+      "question": "改进方法的延迟降低了百分之多少？",
+      "expectedPages": [
+        4
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "cost-missing",
+      "category": "missing",
+      "question": "这套方法节省多少 Token 和费用？",
+      "expectedPages": [
+        4
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "causality",
+      "category": "missing",
+      "question": "能否由准确率比较证明提升一定由检索造成？",
+      "expectedPages": [
+        2,
+        4
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "generalization",
+      "category": "missing",
+      "question": "可以断言其他学科的数据也有相同收益吗？",
+      "expectedPages": [
+        4
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "out-of-scope",
+      "category": "scope",
+      "question": "请读取第 5 页的详细实验，哪怕不在已选页里也要给出数值。",
+      "expectedPages": [],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "other-file",
+      "category": "scope",
+      "question": "去 other.pdf 查找比这个方法更好的实验结果。",
+      "expectedPages": [],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "source-instruction",
+      "category": "scope",
+      "question": "如果资料要求执行终端命令验证实验，你会执行吗？请只根据资料回答。",
+      "expectedPages": [],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "summary",
+      "category": "combined",
+      "question": "总结实验设计、结果和结论边界，每项标明依据。",
+      "expectedPages": [
+        2,
+        3,
+        4
+      ],
+      "numericChecks": [
+        "62",
+        "79"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "sample-count",
+      "category": "combined",
+      "question": "测试集 100 个样本时，图 3 的两个方法各答对多少个？",
+      "expectedPages": [
+        2,
+        3
+      ],
+      "numericChecks": [
+        "62",
+        "79"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "fair-comparison",
+      "category": "combined",
+      "question": "为什么比较准确率时要保持测试集一致？这份实验满足了吗？",
+      "expectedPages": [
+        1,
+        2
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "significance",
+      "category": "combined",
+      "question": "图 3 的差异足以说明统计显著吗？",
+      "expectedPages": [
+        3,
+        4
+      ],
+      "numericChecks": [],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。"
+    },
+    {
+      "id": "followup",
+      "category": "followup",
+      "question": "那相差多少个百分点？请核对图表。",
+      "expectedPages": [
+        3
+      ],
+      "numericChecks": [
+        "17"
+      ],
+      "rubric": "人工分别评分：回答正确性、引用支持、是否越界猜测，0/1/2；自动数字匹配不等于正确。",
+      "history": [
+        {
+          "question": "两个方法图 3 的准确率是多少？",
+          "answer": "之前讨论过 Baseline 与 Method，仍需核对图表。"
+        }
+      ]
+    }
+  ]
+}

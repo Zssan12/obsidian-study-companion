@@ -1,0 +1,10 @@
+{
+  "id": "study-companion",
+  "name": "Study Companion",
+  "version": "0.1.0",
+  "minAppVersion": "1.13.0",
+  "description": "Ask beside your notes, keep each study thread separate, and resume from readable learning records.",
+  "author": "Zssan12",
+  "isDesktopOnly": true,
+  "authorUrl": "https://github.com/Zssan12"
+}
