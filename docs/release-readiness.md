@@ -35,3 +35,4 @@ GitHub 发布不等于在 Obsidian 社区目录上架。本次范围不包括社
 - npm run release:check 通过；独立 ZIP 检查确认 12 个白名单条目、CRC、三件套字节及 SHA-256 一致。
 - 修复本次审计报告的间接依赖；Obsidian API 仍为 1.13.1，开发依赖 moment 单独覆盖为 2.31.0。npm 审计报告零已知漏洞。
 - 安装说明按官方文档核对，Mac/Windows 入口及本地文档链接检查通过；不代表 Windows 实机验收。
+- 干净安装复现并修复 npm 10 的可选 peer 锁文件缺项：补齐 Vite 使用的 esbuild 0.28.2，保留插件构建器 0.25.5；npm 10.9.4 干净安装后完整 953 测试与构建再次通过。
