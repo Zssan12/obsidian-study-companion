@@ -6,10 +6,29 @@
 
 [下载安装包](https://github.com/Zssan12/obsidian-study-companion/releases/latest) · [Mac 从零安装](docs/installation/MAC-SETUP.md) · [Windows 从零安装](docs/installation/WINDOWS-SETUP.md) · [使用说明](docs/user-guide.md) · [常见问题](docs/installation/TROUBLESHOOTING.md)
 
-## 第一次安装，按这个顺序
+## 让 AI 帮你安装
+
+如果你正在使用能操作本机文件和终端的 Codex、Claude Code 等 AI 助手，可以直接复制下面这段提示词给它。普通网页聊天无法直接完成本机安装，请使用后面的手动安装步骤。
+
+```text
+请帮我在这台电脑上安装并配置 Obsidian 的 Study Companion 插件，直到能正常提问。
+项目：https://github.com/Zssan12/obsidian-study-companion
+
+先阅读项目 README 和 docs/installation/ 下对应系统的安装指南，再按实际环境操作：
+1. 检查操作系统、Obsidian 版本，以及是否已有可用的 Codex CLI 或 Claude Code CLI。优先复用已安装的 CLI；需要安装时使用官方安装方式，并核对最新官方说明。只有桌面 App 不代表已安装 CLI。
+2. 确认要安装到哪个 Obsidian 笔记仓库，以及是否使用自定义配置目录。路径不明确或有多个候选时先问我，不要猜。若需要选择或新装 CLI，先确认我有哪个服务的使用权限。浏览器登录由我本人完成，不要读取或输出登录凭据。
+3. 从该仓库 Releases 下载最新正式发布的插件 ZIP 和对应 SHA-256 校验文件，校验通过后解压。使用现成安装包，不要下载 Source code 或编译项目。
+4. 在修改插件文件前让我保存笔记并完全退出 Obsidian。首次安装，将包里的 study-companion 文件夹放入目标仓库的配置目录/plugins/ 下，确认 main.js、manifest.json、styles.css 没有多套一层目录。若已安装，先备份，再仅替换这三个运行文件；保留 data.json、history.json、所有笔记和附件，不要卸载插件或清空目录。
+5. 重新打开 Obsidian，在设置 → 第三方插件中关闭受限模式并启用 Study Companion，将“新对话默认后端”设为已安装并登录的 CLI，再点击“重新检测 CLI 路径”。已有错误路径先清空再检测。路径使用实际程序的完整路径；Windows 需要本机 .exe，不要填写 .cmd、.ps1 或 WSL 路径。模型和回答强度先保留默认。
+6. 用一篇新建测试笔记验证：写入“二分查找每次缩小一半搜索范围”，选中文字打开 Quick Ask，发送“用一个生活例子解释”。确认收到回答后再报告安装成功。
+
+能直接完成的步骤请执行。遇到需要我登录、选择仓库或操作界面的步骤，用简短中文告诉我具体怎么做；如果你无法控制 Obsidian 界面，就指导我点击并等待结果。失败时先查原因，不要靠删除数据或反复重装解决。最后列出安装位置、插件版本、所选 CLI，以及实际验证结果或尚未完成的步骤。
+```
+
+## 手动安装
 
 1. 安装 [Obsidian 桌面版](https://obsidian.md/download)，版本需为 1.13.0 或更新，创建并打开一个本地仓库（也就是存放笔记的文件夹）。
-2. 安装并登录 **Codex CLI 或 Claude Code CLI，二选一即可**。不确定怎么装，直接打开上面的 Mac / Windows 教程，从第一步跟着做。CLI 是连接模型的本机程序，只有网页或桌面 App 不够。
+2. 安装并登录 **Codex CLI 或 Claude Code CLI，二选一即可**。具体操作见 [Mac 安装指南](docs/installation/MAC-SETUP.md) 或 [Windows 安装指南](docs/installation/WINDOWS-SETUP.md)。CLI 是连接模型的本机程序，只有网页或桌面 App 不够。
 3. 打开 [Releases 下载页](https://github.com/Zssan12/obsidian-study-companion/releases/latest)，在 **Assets** 下下载 `study-companion-0.1.0.zip`。不要下载 GitHub 自动生成的 `Source code`。
 4. 解压，将里面的 `study-companion` 文件夹放进你的仓库的 `.obsidian/plugins/`。
 5. Obsidian → 设置 → 第三方插件 → 关闭受限模式 → 启用 **Study Companion**。
