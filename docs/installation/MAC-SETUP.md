@@ -51,7 +51,7 @@ claude
 ## 3. 下载并放好插件
 
 1. 打开 [下载页](https://github.com/Zssan12/obsidian-study-companion/releases/latest)。
-2. 在 **Assets** 中下载 `study-companion-0.1.0.zip`，不要选 `Source code`。
+2. 在 **Assets** 中下载 `study-companion-0.1.1.zip`，不要选 `Source code`。
 3. 在 Finder 双击 ZIP 解压。找到里面的 **study-companion** 文件夹。
 4. 在 Finder 打开你的笔记仓库文件夹，按 `Command + Shift + .` 显示隐藏文件。
 5. 打开 `.obsidian`；没有 `plugins` 文件夹就新建一个。

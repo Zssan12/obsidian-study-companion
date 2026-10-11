@@ -29,7 +29,7 @@
 
 1. 安装 [Obsidian 桌面版](https://obsidian.md/download)，版本需为 1.13.0 或更新，创建并打开一个本地仓库（也就是存放笔记的文件夹）。
 2. 安装并登录 **Codex CLI 或 Claude Code CLI，二选一即可**。具体操作见 [Mac 安装指南](docs/installation/MAC-SETUP.md) 或 [Windows 安装指南](docs/installation/WINDOWS-SETUP.md)。CLI 是连接模型的本机程序，只有网页或桌面 App 不够。
-3. 打开 [Releases 下载页](https://github.com/Zssan12/obsidian-study-companion/releases/latest)，在 **Assets** 下下载 `study-companion-0.1.0.zip`。不要下载 GitHub 自动生成的 `Source code`。
+3. 打开 [Releases 下载页](https://github.com/Zssan12/obsidian-study-companion/releases/latest)，在 **Assets** 下下载 `study-companion-0.1.1.zip`。不要下载 GitHub 自动生成的 `Source code`。
 4. 解压，将里面的 `study-companion` 文件夹放进你的仓库的 `.obsidian/plugins/`。
 5. Obsidian → 设置 → 第三方插件 → 关闭受限模式 → 启用 **Study Companion**。
 6. 设置 → Study Companion → **新对话默认后端**：选刚安装的 Codex 或 Claude → **重新检测 CLI 路径**。模型和回答强度先用默认。
@@ -81,7 +81,7 @@
 
 ## 当前支持范围
 
-- 版本 0.1.0，桌面端，界面以简体中文为主；发布包无 dev / beta 文件名后缀，保留现有完整功能。
+- 版本 0.1.1，桌面端，界面以简体中文为主；发布包无 dev / beta 文件名后缀，保留现有完整功能。
 - GitHub 手动安装；尚未在 Obsidian 社区插件商店上架。
 - 有 macOS 历史开发验证及自动化回归；**Windows 实机完整验收仍未完成**。发布版本号不代表所有平台已通过实机测试。
 - 手机和平板暂不支持；PPT/PPTX 先导出为 PDF。扫描 PDF 需要文字层、可选本地 OCR 或受支持的图文流程。

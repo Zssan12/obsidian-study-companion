@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { deriveLesson, lessonFollowupInstruction, lessonPlanInstruction, lessonTopicInstruction, parseLessonOutline, sameLessonEvidence } from '../../src/application/lesson';
 import type { SourceContext, StudyRecord, StudyUnit } from '../../src/core/contracts';
 import { documentKind } from '../../src/application/document-kind';
-import { lessonPlanPreview } from '../../src/application/lesson';
+import { lessonPlanPreview, resolveLessonContext } from '../../src/application/lesson';
 
 it('restores paper reading from the durable outline without changing topic identities or progress', () => {
   const paper = record({ answer: '资料类型：论文\n\n' + outline });
@@ -93,6 +93,24 @@ describe('sameLessonEvidence', () => {
     expect(sameLessonEvidence(context, { ...context, pdf: { ...context.pdf!, pageCount: 9 } })).toBe(false);
     expect(sameLessonEvidence(context, { ...context, pdf: undefined })).toBe(false);
   });
+});
+
+it('resolves PDF lesson navigation independently of a live quote without granting that quote page evidence', () => {
+  const quote = { ...context, pdf: undefined, selectedText: '新选区', sourcePages: [2] };
+  const restored = resolveLessonContext(unit, [record(), teach(0)], quote);
+  expect(restored).toEqual(context);
+  expect(restored).not.toBe(context);
+  expect(quote.pdf).toBeUndefined();
+  expect(deriveLesson(unit, [record(), teach(0)], restored)!.completed).toHaveLength(1);
+  const explicit = { ...context, pdf: { ...context.pdf!, pages: [1, 2] } };
+  expect(resolveLessonContext(unit, [record()], explicit)).toBe(explicit);
+  expect(deriveLesson(unit, [record()], explicit)).toBeNull();
+  const other = { ...quote, sourcePath: 'Other.pdf' };
+  expect(resolveLessonContext(unit, [record()], other)).toBe(other);
+  expect(resolveLessonContext({ ...unit, mode: 'normal' }, [record()], quote)).toBe(quote);
+  const answer = { ...quote, answerRecordId: 'answer' };
+  expect(resolveLessonContext(unit, [record()], answer)).toBe(answer);
+  expect(resolveLessonContext({ ...unit, lesson: { planId: 'removed', order: [], skipped: [] } }, [record()], quote)).toBe(quote);
 });
 
 describe('deriveLesson', () => {

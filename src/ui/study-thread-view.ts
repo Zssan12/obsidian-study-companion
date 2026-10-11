@@ -23,7 +23,7 @@ import { StableMessages } from './stable-messages';
 import { compactSelection, emptySourceContext, resolveComposerContext } from '../application/composer-context';
 import { ComposerDrafts } from '../application/ComposerDrafts';
 import { LessonControls } from './lesson-controls';
-import { deriveLesson, lessonPlanPreview, type LessonProgress } from '../application/lesson';
+import { deriveLesson, lessonPlanPreview, resolveLessonContext, type LessonProgress } from '../application/lesson';
 import type { LessonAction } from '../core/lesson';
 import type {
   AnswerPolicy,
@@ -289,7 +289,7 @@ export class StudyThreadView extends ItemView {
       plan: scope => this.prepareLessonPlan(scope),
       teach: (progress, topics) => this.submitMainQuestion({ kind: 'teach', planId: progress.plan.id, topicKey: topics[0]!.key,
         ...(topics.length > 1 ? { topicKeys: topics.map(topic => topic.key) } : {}) }, progress.plan.context.markdown
-        ? { ...cloneSourceContext(progress.plan.context), sourcePath: this.sourceContext()?.sourcePath ?? progress.plan.context.sourcePath } : this.sourceContext() ?? undefined,
+        ? { ...cloneSourceContext(progress.plan.context), sourcePath: this.sourceContext()?.sourcePath ?? progress.plan.context.sourcePath } : this.lessonContext() ?? undefined,
         `${topics.length > 1 ? '请合并讲解' : '请讲解'}${documentLabels(progress.plan.answer).kind === 'paper' ? '章节' : '主题'}：${topics.map(topic => topic.title).join('、')}`),
       update: (unit, settings) => this.study.updateLesson(unit.id, settings),
       ...(this.composerActions?.openLessonNote ? { note: (unit: StudyUnit, progress: LessonProgress) => this.composerActions!.openLessonNote!(unit.id, progress.plan.id) } : {}),
@@ -488,7 +488,7 @@ export class StudyThreadView extends ItemView {
     }
     const busy = this.isPendingMainDisplayed() || this.latestSnapshot.running.some(run => run.unitId === activeUnit?.id && run.kind === 'main');
     // The lesson belongs to the source; omitting a question quote must not hide it.
-    const lessonContext = this.sourceContext();
+    const lessonContext = this.lessonContext();
     this.lessonControls?.render(this.latestSnapshot, lessonContext, busy);
     const progress = activeUnit && lessonContext && this.latestSnapshot.mode !== 'normal'
       ? deriveLesson(activeUnit, this.latestSnapshot.records, lessonContext) : null;
@@ -578,6 +578,12 @@ export class StudyThreadView extends ItemView {
 
   private sourceContext(): SourceContext | null {
     return resolveComposerContext(this.latestSnapshot, this.getContext, this.attachments?.snapshot() ?? [], this.lastMainContext);
+  }
+
+  private lessonContext(): SourceContext | null {
+    const context = this.sourceContext();
+    const unit = findUnit(this.latestSnapshot);
+    return unit && context ? resolveLessonContext(unit, this.latestSnapshot.records, context) : context;
   }
 
   private chosenContext(): SourceContext | null {
@@ -746,10 +752,10 @@ export class StudyThreadView extends ItemView {
     const elements = this.elements;
     if (!elements || this.isPendingMainDisplayed()) return;
     const question = lessonAction ? lessonQuestion ?? '按主题讲解这份资料' : elements.composer.value.trim();
-    // Typed outline commands use the same explicit whole-note capture as the button.
-    const typedMarkdownPlan = !lessonAction && this.latestSnapshot.mode !== 'normal'
-      && /\.md$/iu.test(this.sourceContext()?.sourcePath ?? '') && /^(按主题讲解|生成目录)[。！!？?]*$/u.test(question);
-    if (typedMarkdownPlan) { lessonAction = { kind: 'plan' }; explicitContext = this.sourceContext() ?? undefined; markdownScope = 'document'; }
+    // Typed outline commands use the same explicit source preparation as the button.
+    const typedPlan = !lessonAction && this.latestSnapshot.mode !== 'normal'
+      && /\.(md|pdf)$/iu.test(this.sourceContext()?.sourcePath ?? '') && /^(按主题讲解|生成目录)[。！!？?]*$/u.test(question);
+    if (typedPlan) { lessonAction = { kind: 'plan' }; explicitContext = this.sourceContext() ?? undefined; markdownScope = 'document'; }
     if (!question) {
       this.showError('请输入问题。');
       return;
@@ -811,7 +817,7 @@ export class StudyThreadView extends ItemView {
         }
         this.lastMainContext = cloneSourceContext(context);
       }
-      if (mode === 'study' && needsEvidence && !context.pdf && !context.selectedText.trim()
+      if (mode === 'study' && needsEvidence && !context.pdf && (lessonAction || !context.selectedText.trim())
         && context.sourcePath.toLowerCase().endsWith('.pdf')) {
         if (!this.composerActions?.preparePdf) throw new Error('PDF 自动准备不可用，请重新打开资料后重试。');
         pendingMain.preparation = new AbortController();
@@ -847,7 +853,7 @@ export class StudyThreadView extends ItemView {
         this.setStatus('已停止，问题已保留。', sentDraftKey);
         return;
       }
-      if (!lessonAction || typedMarkdownPlan) finishDraft = this.drafts.beginSubmission(sentDraftKey, sentDraft);
+      if (!lessonAction || typedPlan) finishDraft = this.drafts.beginSubmission(sentDraftKey, sentDraft);
       await this.study.submit({
         ...(lessonAction ? { lesson: lessonAction } : {}),
         answerPolicy,

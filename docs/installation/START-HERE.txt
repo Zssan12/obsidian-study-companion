@@ -1,4 +1,4 @@
-Study Companion 0.1.0 — 先读我
+Study Companion 0.1.1 — 先读我
 
 这是 Obsidian 桌面插件。Mac 和 Windows 使用同一份安装包，不需要编译。
 

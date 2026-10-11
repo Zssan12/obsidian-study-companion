@@ -4,7 +4,7 @@
 
 | 现象 | 处理办法 |
 | --- | --- |
-| 解压后只有 src、tests、package.json | 下载了源码。在 Releases 的 Assets 里选 `study-companion-0.1.0.zip` |
+| 解压后只有 src、tests、package.json | 下载了源码。在 Releases 的 Assets 里选 `study-companion-0.1.1.zip` |
 | 插件列表没有 Study Companion | 检查三件套是否在当前仓库配置目录的 plugins/study-companion 下，避免多套一层；重启 Obsidian |
 | 找不到 .obsidian | 先用 Obsidian 打开该仓库；Mac 在 Finder 按 Command+Shift+.；Windows 在地址栏直接输入仓库路径后加 \.obsidian |
 | 不知道 CLI 是什么 | 它是连接模型的本机程序。按 Mac 或 Windows 教程安装 Codex/Claude 其中一个，再登录自己的账号 |

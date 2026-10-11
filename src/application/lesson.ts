@@ -198,6 +198,14 @@ export function deriveLesson(unit: StudyUnit, records: readonly StudyRecord[], c
   };
 }
 
+/** A live PDF quote changes the question evidence, not the saved lesson scope. */
+export function resolveLessonContext(unit: StudyUnit, records: readonly StudyRecord[], context: SourceContext): SourceContext {
+  if (unit.mode === 'normal' || context.sourcePath !== unit.sourcePath || !/\.pdf$/iu.test(context.sourcePath)
+    || context.pdf || context.markdown || context.image || context.answerRecordId) return context;
+  const plan = deriveLesson(unit, records)?.plan;
+  return plan?.context.pdf ? { ...structuredClone(plan.context), sourcePath: unit.sourcePath, sourceName: context.sourceName || plan.context.sourceName } : context;
+}
+
 export function lessonPlanInstruction(context: SourceContext): string {
   requireLessonSource(context);
   if (isMarkdownLesson(context)) return [

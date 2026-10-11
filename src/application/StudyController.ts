@@ -24,7 +24,7 @@ import type {
 } from '../core/contracts';
 import { buildPrompt, validateContext, QUICK_ASK_POLICY, DIRECT_ANSWER_POLICY } from './prompts';
 import { lessonTopicKeys, isLessonAction, isLessonSettings, type LessonSettings } from '../core/lesson';
-import { deriveLesson, lessonFollowupInstruction, lessonPlanInstruction, lessonTopicInstruction, parseLessonOutline } from './lesson';
+import { deriveLesson, lessonFollowupInstruction, lessonPlanInstruction, lessonTopicInstruction, parseLessonOutline, resolveLessonContext } from './lesson';
 import {
   getSessionProviders,
   isBackendProvider,
@@ -308,12 +308,12 @@ export class StudyController implements StudyApp {
     if (!unit) throw new Error('请先开始学习这份资料。');
     if (unit.mode !== 'normal' && unit.sourcePath !== frozen.context.sourcePath) throw new Error('选区与当前学习资料不一致。请切回对应资料，或为当前资料开始学习。');
     const conversationId = frozen.kind === 'main' ? `main:${unit.id}` : (frozen.conversationId ?? this.newId());
-    const lesson = frozen.kind === 'main' ? deriveLesson(unit, this.records, frozen.context) : null;
+    const lesson = frozen.kind === 'main' ? deriveLesson(unit, this.records, resolveLessonContext(unit, this.records, frozen.context)) : null;
     const command = frozen.question.trim().replace(/[。！!？?]+$/u, '');
-    if (!frozen.lesson && lesson?.plan.context.markdown && lesson.next && ['继续', '下一节', '下一主题', '下一个主题', '开始讲解', '继续下一节'].includes(command)) {
+    if (!frozen.lesson && lesson?.next && ['继续', '下一节', '下一主题', '下一个主题', '开始讲解', '继续下一节'].includes(command)) {
       frozen.lesson = { kind: 'teach', planId: lesson.plan.id, topicKey: lesson.next.key };
     }
-    if (frozen.lesson?.kind === 'teach' && lesson?.plan.context.markdown) {
+    if (frozen.lesson?.kind === 'teach' && lesson && (lesson.plan.context.markdown || (!frozen.context.pdf && lesson.plan.context.pdf))) {
       frozen.context = { ...structuredClone(lesson.plan.context), sourcePath: unit.sourcePath, sourceName: frozen.context.sourceName };
     }
     if (frozen.kind === 'quick' && conversationId.startsWith('main:')) throw new Error('旁路会话标识无效。');

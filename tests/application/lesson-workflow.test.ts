@@ -186,6 +186,22 @@ it('keeps the directory after a greeting and followup, then teaches the next exp
   await f.app.dispose();
 });
 
+it('retains the current PDF topic on selection followups and restores saved evidence only for explicit continuation', async () => {
+  const f = await setup();
+  try {
+    await f.plan(); f.control.answer = '解释'; await f.teach();
+    const selected = { ...pdf, pdf: undefined, selectedText: '选中的 PDF 原文', sourcePages: [1] };
+    await f.app.submit({ unitId: f.unit.id, kind: 'main', context: selected, question: '为什么成立？' });
+    expect(f.requests.at(-1)!.prompt).toContain('当前讲解主题：平均速度');
+    expect(f.records.at(-1)?.context).toEqual(selected);
+    expect(f.progress()!.completed).toHaveLength(1);
+    await f.app.submit({ unitId: f.unit.id, kind: 'main', context: selected, question: '继续下一节' });
+    expect(f.records.at(-1)?.context).toEqual(pdf);
+    expect(f.records.at(-1)?.lesson).toMatchObject({ kind: 'teach', planId: f.progress()!.plan.id });
+    expect(f.progress()!.completed).toHaveLength(2);
+  } finally { await f.app.dispose(); }
+});
+
 it('teaching overrides direct answering and still includes the topic source', async () => {
   const f = await setup(); await f.plan();
   f.control.answer = '平均速度是总路程与总时间的比值。';
